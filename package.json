@@ -1,0 +1,53 @@
+{
+  "name": "@giorris/claude-skills",
+  "version": "1.0.0",
+  "description": "CLI tool to install Claude Code skills from the Giorris marketplace",
+  "type": "module",
+  "main": "src/index.js",
+  "bin": {
+    "giorris-skills": "./bin/cli.js",
+    "claude-skills": "./bin/cli.js"
+  },
+  "scripts": {
+    "test": "node bin/cli.js"
+  },
+  "keywords": [
+    "claude",
+    "claude-code",
+    "skills",
+    "ai",
+    "cli",
+    "marketplace"
+  ],
+  "author": {
+    "name": "Cristian Morales",
+    "email": "crmorales.achiardi@gmail.com",
+    "url": "https://giorris.dev"
+  },
+  "license": "MIT",
+  "repository": {
+    "type": "git",
+    "url": "https://github.com/cris-achiardi/claude-skills.git"
+  },
+  "bugs": {
+    "url": "https://github.com/cris-achiardi/claude-skills/issues"
+  },
+  "homepage": "https://github.com/cris-achiardi/claude-skills#readme",
+  "dependencies": {
+    "inquirer": "^9.2.12",
+    "chalk": "^5.3.0",
+    "fs-extra": "^11.2.0",
+    "ora": "^7.0.1"
+  },
+  "engines": {
+    "node": ">=16.0.0"
+  },
+  "files": [
+    "bin/",
+    "src/",
+    "skills/",
+    ".claude-plugin/",
+    "LICENSE",
+    "README.md"
+  ]
+}

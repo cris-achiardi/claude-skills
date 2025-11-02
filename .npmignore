@@ -1,0 +1,10 @@
+.git
+.github
+.vscode
+*.log
+.DS_Store
+.env
+coverage/
+tests/
+.gitignore
+.npmignore

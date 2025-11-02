@@ -4,21 +4,27 @@ Curated collection of Claude Code skills for design systems, development workflo
 
 ## 🚀 Quick Start
 
-### Add the Marketplace
+### NPX Installation (Recommended)
+
+The easiest way to install skills is using npx:
 
 ```bash
+# Interactive mode - select skills from a menu
+npx @giorris/claude-skills
+
+# Install specific skill
+npx @giorris/claude-skills install ai-component-metadata
+
+# Install all skills at once
+npx @giorris/claude-skills --all
+```
+
+### Via Claude Code Marketplace
+
+```bash
+# Add the marketplace
 /plugin marketplace add github:cris-achiardi/claude-skills
-```
 
-### Browse Available Skills
-
-```bash
-/plugin
-```
-
-### Install a Skill
-
-```bash
 # Install by name from marketplace
 /plugin install ai-component-metadata@giorris-skills
 
@@ -36,7 +42,7 @@ Generate AI-ready metadata for design system components to enable intelligent UI
 
 **Install:**
 ```bash
-/plugin install ai-component-metadata@giorris-skills
+npx @giorris/claude-skills install ai-component-metadata
 ```
 
 **Use Cases:**
@@ -57,7 +63,7 @@ Structured framework for working with AI to transform vague ideas into clear, do
 
 **Install:**
 ```bash
-/plugin install spec-ideation@giorris-skills
+npx @giorris/claude-skills install spec-ideation
 ```
 
 **Use Cases:**
