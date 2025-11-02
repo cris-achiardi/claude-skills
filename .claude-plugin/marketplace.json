@@ -2,7 +2,7 @@
   "name": "giorris-skills",
   "owner": {
     "name": "Cristian Morales",
-    "email": "contact@giorris.dev"
+    "email": "crmorales.achiardi@gmail.com"
   },
   "description": "Curated Claude Code skills for design systems, development workflows, and AI-assisted ideation",
   "repository": "https://github.com/cris-achiardi/claude-skills",
@@ -15,7 +15,7 @@
       "category": "design-system",
       "author": {
         "name": "Cristian Morales",
-        "email": "contact@giorris.dev"
+        "email": "crmorales.achiardi@gmail.com"
       },
       "license": "MIT"
     },
@@ -27,7 +27,7 @@
       "category": "workflow",
       "author": {
         "name": "Cristian Morales",
-        "email": "contact@giorris.dev"
+        "email": "crmorales.achiardi@gmail.com"
       },
       "license": "MIT"
     }
