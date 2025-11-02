@@ -1,0 +1,30 @@
+{
+  "name": "giorris-skills",
+  "owner": {
+    "name": "Cristian Morales",
+    "url": "https://giorris.dev",
+    "email": "contact@giorris.dev"
+  },
+  "description": "Curated Claude Code skills for design systems, development workflows, and AI-assisted ideation",
+  "repository": "https://github.com/cris-achiardi/claude-skills",
+  "plugins": [
+    {
+      "name": "ai-component-metadata",
+      "source": "github:cris-achiardi/claude-skills/skills/ai-component-metadata",
+      "description": "Generate AI-ready metadata for design system components to enable intelligent UI generation",
+      "version": "1.0.0",
+      "category": "design-system",
+      "author": "Cristian Morales",
+      "license": "MIT"
+    },
+    {
+      "name": "spec-ideation",
+      "source": "github:cris-achiardi/claude-skills/skills/spec-ideation",
+      "description": "Structured framework for working with AI through expansion, contraction, and documentation phases",
+      "version": "1.0.0",
+      "category": "workflow",
+      "author": "Cristian Morales",
+      "license": "MIT"
+    }
+  ]
+}

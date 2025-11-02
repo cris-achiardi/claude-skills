@@ -1,0 +1,206 @@
+---
+name: spec-ideation
+description: Structured framework for working with AI to generate thoughtful solutions through expansion, contraction, and documentation phases. Use when users need to develop ideas, make decisions, or create specifications for design, development, research, or any domain requiring structured thinking. Triggers include requests to ideate, plan, specify, or work through complex problems.
+---
+
+# Spec Ideation Framework
+
+A structured process for working with AI to transform vague ideas into clear, documented specifications through conscious decision-making.
+
+## Core Concept
+
+**Spec Design vs Vibe Design:**
+- **Vibe Design**: Asking AI for massive unstructured ideas → results in paralysis and lack of control
+- **Spec Design**: Structuring the problem before asking, documenting after → results in specific solutions and clear decisions
+
+The framework is **domain-agnostic** (works for research, development, design, data analysis) and **tool-agnostic** (works in any AI interface).
+
+## The Three-Phase Process
+
+### Phase 1: Expansion
+
+**Goal**: Discover what you don't know you don't know.
+
+**How it works:**
+1. Start with a **user story or EARS requirement** (not a vague question)
+2. AI expands: suggests components, architecture, technologies, implications
+3. You receive information you hadn't considered
+4. Your understanding of the problem grows
+
+**When to use:**
+- There are unanswered questions
+- AI suggests things you don't understand
+- You're unsure if your initial solution is correct
+
+**Example interaction:**
+```
+User: "I need to normalize contacts from spreadsheets: separate first/last name, apply title case"
+Claude: "What about compound names? Prefixes? Special characters? Duplicate data?"
+User: "I hadn't considered that"
+```
+
+### Phase 2: Contraction (The Iterative Loop)
+
+**Goal**: Make conscious decisions, not magical ones.
+
+**How it works** (non-linear loop):
+1. **Ask for clarity** - "Why this architecture vs that one?" → Understand better
+2. **Expand requirements** - Include new constraints, define additional context → Scope refines
+3. **Identify edge cases** - Ask "what if...?" → More robust decisions
+4. **AI clarifies** - Reformulates, defends, or questions your assumptions → New knowledge
+5. **Return to step 1** - Answers generate new questions until sufficient clarity
+
+**Signs you're in contraction:**
+- Asking specific questions, not general ones
+- AI makes you think differently
+- Discovering missing information
+- Scope is refining, not expanding
+
+**When you need more contraction:**
+- Decisions still unmade
+- Unsure why to choose X over Y
+- Trade-offs not considered
+
+**Example loop:**
+```
+User: "I need a CLI tool to normalize contacts"
+Claude: "CLI vs web? Different implications"
+User: "What are they?"
+Claude: "CLI more portable, web more accessible for non-technical users"
+User: "That changes everything. I need web then"
+Claude: "Then you'll need these components..."
+(Loop continues)
+```
+
+### Phase 3: Documentation
+
+**Goal**: Transform conversation into action.
+
+**When to document:**
+When you have sufficient clarity (a "feel", not a checklist):
+- Covered most use cases
+- Identified main trade-offs
+- Decisions have justification
+- Scope is closed
+
+**What to document:**
+Artifacts that emerge are **thought synthesis**, not templates:
+
+1. **Product Brief** - What, why, for whom (synthesis of expansion + contraction)
+2. **Roadmap** - Phases, priorities, dependencies (reflects decisions made)
+3. **Implementation Plan** - Architecture, components, technical details (specific because conscious)
+
+**Important**: Documentation is **living**, not frozen:
+- Version changes (changelog)
+- Record decisions during implementation
+- Adjust if context changes
+- Serves as reference for why each decision was made
+
+## Supporting Tools
+
+### User Stories
+**Format**: "As [role], I need [action], to [benefit]"
+**Use in framework**: Starting point for expansion, lets AI understand the human "why"
+
+### EARS (Easy Approach to Requirement Syntax)
+**Format**:
+- Given [context]
+- When [action]
+- Then [expected result]
+
+**Use in framework**: Technical specification when there's sufficient clarity
+
+### Custom Subprompts
+**Concept**: Your coded opinions that you control
+**Example**: "When suggesting architectures, prioritize: portability, maintainability, simplicity. In that order."
+
+## Clarity Metrics
+
+**Positive signals (ready to document):**
+- Can explain decisions without doubts
+- Considered at least 2 alternatives
+- Identified main trade-offs
+- Scope is defined (what's in, what's out)
+- No unanswered questions
+
+**Negative signals (need more contraction):**
+- Still doubting between options
+- Can't justify why this choice
+- Don't understand a trade-off
+- Vague scope
+- New questions constantly arising
+
+## Claude's Role in Each Phase
+
+### During Expansion
+- Sparring partner that broadens perspective
+- Suggests what you didn't see
+- Asks uncomfortable questions
+- Brings external context
+
+### During Contraction
+- Trade-off clarifier
+- Explains why one option vs another
+- Identifies implications
+- Questions your assumptions
+
+### During Documentation
+- Synthesizer
+- Organizes thinking into artifacts
+- Verifies coherence
+- Generates variants if needed
+
+### During Execution
+- Validated executor
+- Implements according to specification
+- You validate output
+- Adjust as needed
+
+**Key point**: In each phase, YOU decide. AI expands information. You process it with criteria.
+
+## Antipatterns to Avoid
+
+1. **Expansion without Contraction** - Infinite ideas, never deciding → paralysis
+2. **Contraction without Expansion** - Quick decisions without questioning → mediocre solutions
+3. **Documentation without Process** - Documents without thought → empty artifacts
+4. **Confusing Tool with Framework** - Thinking Lovable/Cursor = the framework → tool dependency
+5. **Accepting Hidden Subprompts** - Not questioning how the tool modifies responses → lack of control
+
+## Working Instructions for Claude
+
+When a user engages this skill:
+
+1. **Identify the current phase** based on their request:
+   - Starting a new idea? → Expansion
+   - Refining understanding? → Contraction
+   - Ready to document? → Documentation
+
+2. **During Expansion:**
+   - Ask probing questions about aspects they haven't considered
+   - Suggest components, implications, alternatives
+   - Identify gaps in their thinking
+   - Don't accept vague requests - ask for user stories or requirements
+
+3. **During Contraction:**
+   - Present trade-offs clearly
+   - Explain WHY, not just WHAT
+   - Question assumptions (theirs and yours)
+   - Identify edge cases
+   - Help refine scope through iterative questioning
+   - Signal when they might need more expansion
+
+4. **During Documentation:**
+   - Only proceed when user shows signs of sufficient clarity
+   - Structure artifacts that reflect the decisions made
+   - Include justifications for choices
+   - Make trade-offs explicit
+   - Suggest next steps or validation approaches
+
+5. **Throughout all phases:**
+   - Be direct but thoughtful (37signals style, softened)
+   - Avoid list-heavy responses unless specifically requested
+   - Use prose with natural language lists ("things include: x, y, and z")
+   - Make decisions transparent and questionable
+   - Remember: you amplify their thinking, you don't replace it
+
+For detailed examples and domain-specific applications, see [EXAMPLES.md](references/EXAMPLES.md)
