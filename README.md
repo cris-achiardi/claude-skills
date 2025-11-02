@@ -78,7 +78,7 @@ npx giorris-claude-skills install spec-ideation
 
 ## 🌐 Browse Online
 
-Visit [giorris.dev/skills](https://giorris.dev/skills) to:
+Visit **coming soon** to:
 - Browse skills with syntax-highlighted previews
 - View detailed documentation
 - See usage examples
@@ -133,16 +133,17 @@ Copyright © 2025 Cristian Morales
 ## 🔗 Links
 
 - **Website:** [giorris.dev](https://giorris.dev)
-- **Skills Catalog:** [giorris.dev/skills](https://giorris.dev/skills)
-- **Portfolio:** [giorris.dev](https://giorris.dev)
+- **Skills Catalog:** coming soon
 - **GitHub:** [@cris-achiardi](https://github.com/cris-achiardi)
 
 ## 💬 Support
 
 - **Documentation:** [giorris.dev/skills](https://giorris.dev/skills)
 - **Issues:** [GitHub Issues](https://github.com/cris-achiardi/claude-skills/issues)
-- **Contact:** contact@giorris.dev
+- **Contact:** crmorales.achiardi@gmail.com
 
 ---
 
-Made with ❤️ by [Cristian Morales](https://giorris.dev)
+#### ⭐ Found this useful? Give us a heart to support the project!
+
+[![Buy Me A Coffee](https://img.buymeacoffee.com/button-api/?text=Buy%20me%20a%20coffee&emoji=&slug=giorris&button_colour=5146e6&font_colour=ffffff&font_family=Comic&outline_colour=ffffff&coffee_colour=FFDD00)](https://www.buymeacoffee.com/giorris)
