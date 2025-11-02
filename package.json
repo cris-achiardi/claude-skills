@@ -5,8 +5,8 @@
   "type": "module",
   "main": "src/index.js",
   "bin": {
-    "giorris-skills": "./bin/cli.js",
-    "claude-skills": "./bin/cli.js"
+    "giorris-skills": "bin/cli.js",
+    "claude-skills": "bin/cli.js"
   },
   "scripts": {
     "test": "node bin/cli.js"
@@ -27,7 +27,7 @@
   "license": "MIT",
   "repository": {
     "type": "git",
-    "url": "https://github.com/cris-achiardi/claude-skills.git"
+    "url": "git+https://github.com/cris-achiardi/claude-skills.git"
   },
   "bugs": {
     "url": "https://github.com/cris-achiardi/claude-skills/issues"
