@@ -55,6 +55,28 @@ npx giorris-claude-skills install ai-component-metadata
 
 ---
 
+### AI DS Composer
+**Category:** Design System
+**Version:** 1.0.0
+
+Strategic guide for consuming design system metadata to compose components intelligently. Teaches AI to reason through metadata hierarchically, prioritize component reuse, apply selection criteria, and flag gaps when existing components don't fit requirements.
+
+**Install:**
+```bash
+/plugin install ai-ds-composer@giorris-skills
+```
+
+**Use Cases:**
+- Intelligent UI component selection and composition
+- Design system component reasoning and reuse
+- Understanding hierarchical metadata structures
+- Applying anti-pattern rules and selection criteria
+- Flagging when custom components are needed
+
+**Learn more:** [View Documentation](./skills/ai-ds-composer/)
+
+---
+
 ### Spec Ideation Framework
 **Category:** Workflow
 **Version:** 1.0.0

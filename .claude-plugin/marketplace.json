@@ -30,6 +30,18 @@
         "email": "crmorales.achiardi@gmail.com"
       },
       "license": "MIT"
+    },
+    {
+      "name": "ai-ds-composer",
+      "source": "./skills/ai-ds-composer",
+      "description": "Strategic guide for consuming design system metadata to compose components intelligently",
+      "version": "1.0.0",
+      "category": "design-system",
+      "author": {
+        "name": "Cristian Morales",
+        "email": "crmorales.achiardi@gmail.com"
+      },
+      "license": "MIT"
     }
   ]
 }
