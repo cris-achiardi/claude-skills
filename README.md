@@ -98,6 +98,48 @@ npx giorris-claude-skills install spec-ideation
 
 ---
 
+### Crazy 8's (Solo Version)
+**Category:** Workflow
+**Version:** 1.0.0
+
+Solo rapid ideation method based on Google Design Sprint Crazy 8's exercise. Generates 8 distinct solution ideas in 8 minutes through rapid-fire ideation or sketch documentation. Includes creativity warm-up questions, built-in timer, optional creative constraints, and generates visual HTML/CSS prototypes.
+
+**Install:**
+```bash
+npx giorris-claude-skills install crazy-8s
+```
+
+**Use Cases:**
+- Rapid solo ideation for design challenges
+- Exploring multiple solution directions quickly
+- Pushing beyond first obvious ideas
+- Generating variety before converging on solutions
+
+**Learn more:** [View Documentation](./skills/crazy-8s/)
+
+---
+
+### Problem Mapping
+**Category:** Workflow
+**Version:** 1.0.0
+
+Foundational problem framing for design sprints and product strategy. Based on Google Design Sprint "Understand" phase methodology. Creates structured problem map documents that establish shared understanding before ideation - defining problem statements, identifying users/stakeholders, setting success criteria, and documenting constraints.
+
+**Install:**
+```bash
+npx giorris-claude-skills install problem-mapping
+```
+
+**Use Cases:**
+- Framing design challenges before solution generation
+- Establishing shared team understanding
+- Documenting goals, constraints, and assumptions
+- Foundation for HMW exercises and design sprints
+
+**Learn more:** [View Documentation](./skills/problem-mapping/)
+
+---
+
 ## 🌐 Browse Online
 
 Visit **coming soon** to:

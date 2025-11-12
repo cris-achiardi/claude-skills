@@ -42,6 +42,30 @@
         "email": "crmorales.achiardi@gmail.com"
       },
       "license": "MIT"
+    },
+    {
+      "name": "crazy-8s",
+      "source": "./skills/crazy-8s",
+      "description": "Solo rapid ideation method based on Google Design Sprint Crazy 8's exercise. Generates 8 distinct solution ideas in 8 minutes through rapid-fire ideation or sketch documentation.",
+      "version": "1.0.0",
+      "category": "workflow",
+      "author": {
+        "name": "Cristian Morales",
+        "email": "crmorales.achiardi@gmail.com"
+      },
+      "license": "MIT"
+    },
+    {
+      "name": "problem-mapping",
+      "source": "./skills/problem-mapping",
+      "description": "Foundational problem framing for design sprints and product strategy. Based on Google Design Sprint 'Understand' phase methodology.",
+      "version": "1.0.0",
+      "category": "workflow",
+      "author": {
+        "name": "Cristian Morales",
+        "email": "crmorales.achiardi@gmail.com"
+      },
+      "license": "MIT"
     }
   ]
 }
