@@ -66,6 +66,18 @@
         "email": "crmorales.achiardi@gmail.com"
       },
       "license": "MIT"
+    },
+    {
+      "name": "codebase-index",
+      "source": "./skills/codebase-index",
+      "description": "Automatically generates relationship and dependency maps for codebases. Creates JSON indexes of component usage, npm dependencies, data flow, and utility relationships to help AI understand project structure.",
+      "version": "1.0.0",
+      "category": "development",
+      "author": {
+        "name": "Cristian Morales",
+        "email": "crmorales.achiardi@gmail.com"
+      },
+      "license": "MIT"
     }
   ]
 }
