@@ -1,5 +1,6 @@
 ---
 name: ai-ds-composer
+version: 1.0.0
 description: Strategic guide for consuming design system metadata to compose components intelligently. Use when generating or modifying UI components and layouts to ensure component reuse, proper variant selection, and adherence to design system patterns. Helps Claude understand project structure, read hierarchical metadata indexes, apply anti-pattern rules, and flag when existing components don't fit a requirement.
 ---
 

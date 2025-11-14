@@ -1,5 +1,6 @@
 ---
 name: crazy-8s
+version: 1.0.0
 description: Solo rapid ideation method based on Google Design Sprint Crazy 8's exercise. Generates 8 distinct solution ideas in 8 minutes through rapid-fire ideation or sketch documentation. Use when working alone and need to explore multiple solution directions quickly, push beyond first obvious ideas, or generate variety before converging. Includes creativity warm-up questions, built-in timer, optional creative constraints, and generates visual HTML/CSS prototypes plus comparison table. NOT for team sessions (traditional Crazy 8's works better for teams).
 ---
 

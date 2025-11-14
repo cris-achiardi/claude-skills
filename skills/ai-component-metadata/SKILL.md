@@ -1,5 +1,6 @@
 ---
 name: ai-component-metadata
+version: 1.0.0
 description: Generate AI-ready metadata for design system components to enable intelligent UI generation. Analyzes component structure and generates structured metadata that helps AI understand when and how to use components correctly. Useful for teams building AI-consumable design systems.
 ---
 

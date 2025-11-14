@@ -1,5 +1,6 @@
 ---
 name: problem-mapping
+version: 1.0.0
 description: Foundational problem framing for design sprints and product strategy. Based on Google Design Sprint "Understand" phase methodology. Use when teams need to establish shared understanding before ideation - defining problem statements, identifying users/stakeholders, setting success criteria, documenting constraints and assumptions, and capturing pain points. Works in solo, team synchronous, or team asynchronous modes. Creates structured problem map document as foundation for HMW exercises and solution generation.
 ---
 
