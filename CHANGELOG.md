@@ -5,6 +5,24 @@ All notable changes to the Giorris Claude Skills marketplace will be documented 
 The format is based on [Keep a Changelog](https://keepachangelog.com/en/1.0.0/),
 and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0.html).
 
+## [1.3.0] - 2025-11-14
+
+### Added
+- **Version Comparison**: Installer now automatically detects when newer skill versions are available
+- **Smart Update Messages**: Shows "Updating X: 1.0.0 → 1.1.0" when upgrading skills
+- **Up-to-date Detection**: Displays "already up to date" message when same version is already installed
+- **Force Reinstall Flag**: Added `--force` / `-f` flag to force reinstallation of skills
+- **Version Tracking**: All SKILL.md files now include version field in frontmatter
+
+### Changed
+- Improved user experience with clearer installation status messages
+- Updated help text to include `--force` flag examples
+- Installer now returns status objects for better error handling
+
+### Fixed
+- Skills are no longer skipped when newer versions are available
+- Version detection works with all SKILL.md frontmatter formats
+
 ## [1.2.1] - 2025-11-14
 
 ### Fixed
