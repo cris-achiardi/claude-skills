@@ -274,7 +274,7 @@ class CodebaseIndexer:
         
         # Results storage
         self.components = {}
-        self.dependencies = {"npmPackages": {}, "utilities": {}, "styles": {}}
+        self.dependencies = {"npmPackages": {}, "utilities": {}, "styles": {}, "schemas": {}}
         self.data_queries = {"dataSources": {}, "staticPaths": {}}
         
         # Statistics
@@ -282,6 +282,7 @@ class CodebaseIndexer:
             "components_scanned": 0,
             "relationships_found": 0,
             "utilities_found": 0,
+            "schemas_found": 0,
             "queries_found": 0,
             "framework": self.framework,
             "errors": []
@@ -347,13 +348,16 @@ class CodebaseIndexer:
         
         # Scan utilities
         self._scan_utilities()
-        
+
+        # Scan schemas
+        self._scan_schemas()
+
         # Scan package.json
         self._scan_package_json()
-        
+
         # Scan data queries
         self._scan_data_queries()
-        
+
         # Scan CSS
         self._scan_styles()
         
@@ -384,9 +388,12 @@ class CodebaseIndexer:
         try:
             with open(file_path, 'r', encoding='utf-8') as f:
                 content = f.read()
-            
+
             relative_path = str(file_path.relative_to(self.project_root))
-            component_name = file_path.stem
+            # FIX: Use full relative path as key to avoid filename collisions
+            # Previously used file_path.stem which caused collisions with duplicate filenames
+            # (e.g., index.astro, [slug].astro in different directories)
+            component_name = relative_path
             
             # Determine component type from path
             component_type = self._get_component_type(file_path)
@@ -397,9 +404,26 @@ class CodebaseIndexer:
             # Parse imports
             imports = self._parse_imports(content, file_path)
             
-            # Check for metadata file
-            metadata_path = file_path.with_suffix(file_path.suffix + '.metadata.json')
-            has_metadata = metadata_path.exists()
+            # Check for metadata file (multiple formats)
+            # Try both Component.astro.metadata.ts and Component.metadata.ts patterns
+            metadata_formats = ['.metadata.json', '.metadata.ts', '.metadata.tsx']
+            metadata_path = None
+            has_metadata = False
+
+            for ext in metadata_formats:
+                # Try: Component.astro.metadata.ts
+                potential_path = file_path.with_suffix(file_path.suffix + ext)
+                if potential_path.exists():
+                    metadata_path = potential_path
+                    has_metadata = True
+                    break
+
+                # Try: Component.metadata.ts (remove original extension first)
+                potential_path = file_path.with_suffix(ext)
+                if potential_path.exists():
+                    metadata_path = potential_path
+                    has_metadata = True
+                    break
             
             # Store component info
             component_info = {
@@ -409,12 +433,22 @@ class CodebaseIndexer:
                 "uses": [imp["name"] for imp in imports if imp["is_component"]],
                 "usedBy": [],  # Will be populated later
                 "externalDependencies": [imp["source"] for imp in imports if imp["is_external"]],
-                "utilityDependencies": [imp["source"] for imp in imports if imp["is_utility"]]
+                "utilityDependencies": [imp["source"] for imp in imports if imp["is_utility"]],
+                "schemaDependencies": [imp["source"] for imp in imports if imp["is_schema"]]
             }
             
             if has_metadata:
                 component_info["metadata"] = str(metadata_path.relative_to(self.project_root))
-            
+
+            # Check for collision (shouldn't happen with full paths, but good to log)
+            if component_name in self.components:
+                self.stats["errors"].append(
+                    f"WARNING: Component name collision for '{component_name}'\n"
+                    f"  Existing: {self.components[component_name]['path']}\n"
+                    f"  New: {relative_path}\n"
+                    f"  Using new entry (overwriting)"
+                )
+
             self.components[component_name] = component_info
             
         except Exception as e:
@@ -492,7 +526,8 @@ class CodebaseIndexer:
                         "source": source,
                         "is_component": self._is_component_import(source),
                         "is_external": self._is_external_import(source),
-                        "is_utility": self._is_utility_import(source)
+                        "is_utility": self._is_utility_import(source),
+                        "is_schema": self._is_schema_import(source)
                     }
                     imports.append(import_info)
                     self.stats["relationships_found"] += 1
@@ -513,6 +548,11 @@ class CodebaseIndexer:
         """Check if import is from lib/utils"""
         return ('/lib/' in source or '/utils/' in source or '/helpers/' in source or
                 source.startswith('@/lib/') or source.startswith('~/lib/'))
+
+    def _is_schema_import(self, source: str) -> bool:
+        """Check if import is from schemas"""
+        return ('/schemas/' in source or '/schema/' in source or
+                source.startswith('@/schemas/') or source.startswith('~/schemas/'))
     
     def _scan_utilities(self):
         """Scan utility files"""
@@ -591,8 +631,86 @@ class CodebaseIndexer:
             "config": "Configuration",
             "types": "Type definitions",
             "validation": "Validation utilities",
+            "shiki": "Code syntax highlighting",
+            "github": "GitHub API integration",
+            "clarity": "Analytics integration",
+            "skills": "Skills management",
         }
         return purposes.get(filename.lower(), "Utility functions")
+
+    def _scan_schemas(self):
+        """Scan schema files"""
+        for src_dir in self.src_dirs:
+            schemas_dir = src_dir / "schemas"
+
+            if not schemas_dir.exists():
+                continue
+
+            for file_path in schemas_dir.rglob('*.ts'):
+                if file_path.name.endswith('.d.ts'):
+                    continue
+
+                try:
+                    with open(file_path, 'r', encoding='utf-8') as f:
+                        content = f.read()
+
+                    exports = self._parse_exports(content)
+                    relative_path = str(file_path.relative_to(self.project_root))
+                    used_in = self._find_schema_usage(relative_path, file_path.stem)
+                    schema_type = self._infer_schema_type(file_path.stem, content)
+
+                    self.dependencies["schemas"][relative_path] = {
+                        "name": file_path.stem,
+                        "exports": exports,
+                        "usedIn": used_in,
+                        "type": schema_type,
+                        "purpose": f"Schema definition for {file_path.stem}"
+                    }
+
+                    self.stats["schemas_found"] += 1
+
+                except Exception as e:
+                    self.stats["errors"].append(f"Error scanning schema: {str(e)}")
+
+    def _find_schema_usage(self, schema_path: str, schema_name: str) -> List[str]:
+        """Find files that import this schema"""
+        used_in = []
+
+        for component_name, info in self.components.items():
+            if schema_path in info.get("schemaDependencies", []) or \
+               any(schema_name in dep for dep in info.get("schemaDependencies", [])):
+                used_in.append(info["path"])
+
+        return used_in
+
+    def _infer_schema_type(self, filename: str, content: str) -> str:
+        """Infer schema type based on content"""
+        filename_lower = filename.lower()
+
+        # Check for Sanity schema patterns
+        if "defineType" in content or "defineField" in content:
+            return "sanity"
+
+        # Check for Zod patterns
+        if "z.object" in content or "import { z }" in content:
+            return "zod"
+
+        # Check for TypeScript types/interfaces
+        if "interface " in content or "type " in content:
+            if "Schema" in content or "schema" in filename_lower:
+                return "typescript-schema"
+            return "typescript"
+
+        # Specific schema types based on common naming
+        schema_types = {
+            "thought": "content-schema",
+            "chat": "content-schema",
+            "codeblock": "content-schema",
+            "contentSection": "content-schema",
+            "columngroup": "layout-schema",
+        }
+
+        return schema_types.get(filename_lower, "schema")
     
     def _scan_package_json(self):
         """Scan package.json"""
@@ -731,22 +849,50 @@ class CodebaseIndexer:
         """Parse CSS classes"""
         classes = []
         class_pattern = r'\.([a-zA-Z][a-zA-Z0-9_-]*)\s*\{'
-        
+
         for match in re.finditer(class_pattern, content):
             classes.append(match.group(1))
-        
+
+        # Determine style purpose based on filename
+        filename = Path(file_path).stem.lower()
+        style_purposes = {
+            "global": "Global styles and base configuration",
+            "tokens": "Design tokens and CSS variables",
+            "reset": "CSS reset and normalization",
+            "layout": "Layout utilities and grid systems",
+            "utilities": "Utility classes",
+            "effects": "Visual effects and animations",
+            "syntax-highlighting": "Code syntax highlighting styles",
+        }
+
         self.dependencies["styles"][file_path] = {
-            "type": "utility-classes",
+            "type": "stylesheet",
             "classes": sorted(set(classes)),
+            "purpose": style_purposes.get(filename, "Stylesheet"),
             "usedIn": "global"
         }
     
     def _populate_used_by(self):
         """Populate usedBy relationships"""
-        for component_name, info in self.components.items():
-            for used_component in info.get("uses", []):
-                if used_component in self.components:
-                    self.components[used_component]["usedBy"].append(info["path"])
+        # Build a mapping of component simple names to full paths for lookup
+        name_to_paths = {}
+        for full_path, info in self.components.items():
+            # Extract simple component name from path
+            simple_name = Path(full_path).stem
+            if simple_name not in name_to_paths:
+                name_to_paths[simple_name] = []
+            name_to_paths[simple_name].append(full_path)
+
+        for component_path, info in self.components.items():
+            for used_component_name in info.get("uses", []):
+                # Try exact match first (full path)
+                if used_component_name in self.components:
+                    self.components[used_component_name]["usedBy"].append(info["path"])
+                # Otherwise try simple name lookup
+                elif used_component_name in name_to_paths:
+                    # If multiple components have same name, add to all (ambiguous)
+                    for target_path in name_to_paths[used_component_name]:
+                        self.components[target_path]["usedBy"].append(info["path"])
     
     def _generate_outputs(self):
         """Generate output files"""
@@ -805,26 +951,46 @@ class CodebaseIndexer:
     def _generate_index(self) -> Dict:
         """Generate index file"""
         metadata_count = sum(1 for info in self.components.values() if "metadata" in info)
-        
+
         return {
             "version": "1.0.0",
             "generated": datetime.now(timezone.utc).isoformat(),
             "generatedBy": "codebase-indexer-skill",
             "framework": self.framework,
             "format": self.output_format,
+            "summary": {
+                "totalComponents": len(self.components),
+                "componentsWithMetadata": metadata_count,
+                "utilities": len(self.dependencies.get("utilities", {})),
+                "schemas": len(self.dependencies.get("schemas", {})),
+                "styleFiles": len(self.dependencies.get("styles", {})),
+                "relationshipsMapped": self.stats["relationships_found"]
+            },
             "sources": {
                 "componentMetadata": {
-                    "location": "**/*.metadata.json",
-                    "purpose": "Component API",
+                    "location": "**/*.metadata.{ts,tsx,json}",
+                    "purpose": "Component API, props, variants, UX patterns",
                     "type": "manual",
-                    "count": metadata_count
+                    "count": metadata_count,
+                    "formats": ["ts", "tsx", "json"]
                 },
                 "relationships": {
                     "location": ".ai/relationships/",
-                    "purpose": "Component relationships",
+                    "purpose": "Component relationships and dependencies",
                     "type": "auto-generated",
-                    "format": self.output_format
+                    "format": self.output_format,
+                    "files": [
+                        "component-usage.toon",
+                        "dependencies.toon",
+                        "data-flow.toon"
+                    ]
                 }
+            },
+            "usage": {
+                "loadOnce": "Read index.toon and relationships/* once at conversation start",
+                "keepInContext": "Maintain loaded data for entire conversation (~4000 tokens)",
+                "loadMetadataOnDemand": "Read component *.metadata.* files only when working with that component",
+                "tokenEfficiency": "TOON format is 30-60% more efficient than JSON"
             }
         }
     
@@ -849,6 +1015,7 @@ class CodebaseIndexer:
         print(f"✅ {self.stats['components_scanned']} components indexed")
         print(f"✅ {self.stats['relationships_found']} relationships mapped")
         print(f"✅ {self.stats['utilities_found']} utilities tracked")
+        print(f"✅ {self.stats['schemas_found']} schemas tracked")
         print(f"✅ {self.stats['queries_found']} queries documented")
         print(f"📁 Output: {self.output_dir}")
         
