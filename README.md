@@ -1,6 +1,23 @@
 # Claude Code Skills by Giorris
 
-Curated collection of Claude Code skills for design systems, development workflows, and AI-assisted ideation.
+Ready-to-use Claude skills for design workflows and spark creativity with AI.
+
+## 📢 Latest Release
+
+**Version 1.3.0** - Skill versioning and updating capabilities
+
+This release adds automatic skill version management through the npm installer. Skills can now be updated seamlessly.
+
+**Updating Skills:**
+```bash
+# Update specific skill
+npx giorris-claude-skills install ai-component-metadata --force
+
+# Update all skills
+npx giorris-claude-skills --all --force
+```
+
+Use the `--force` flag if skills don't automatically update to the latest version as skill version was added recently.
 
 ## 🚀 Quick Start
 
