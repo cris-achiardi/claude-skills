@@ -1,5 +1,9 @@
 # Claude Code Skills by Giorris
 
+[![npm version](https://img.shields.io/npm/v/giorris-claude-skills.svg?style=flat-square)](https://www.npmjs.com/package/giorris-claude-skills)
+[![npm downloads](https://img.shields.io/npm/dt/giorris-claude-skills.svg?style=flat-square)](https://www.npmjs.com/package/giorris-claude-skills)
+[![GitHub license](https://img.shields.io/github/license/cris-achiardi/claude-skills.svg?style=flat-square)](https://github.com/cris-achiardi/claude-skills/blob/main/LICENSE)
+
 Ready-to-use Claude skills for design workflows and spark creativity with AI.
 
 ## 📢 Latest Release
