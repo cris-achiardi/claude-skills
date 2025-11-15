@@ -98,6 +98,29 @@ Strategic guide for consuming design system metadata to compose components intel
 
 ---
 
+### Codebase Index
+**Category:** Development Tools
+**Version:** 1.1.0
+
+Automatically generate relationship and dependency maps for any component-based codebase (React, Vue, Svelte, Astro, Next.js, Angular, Solid). Auto-detects framework and supports TOON format for 30-60% token savings. Creates comprehensive JSON/TOON files mapping component usage, imports, npm dependencies, utilities, CSS, and data queries.
+
+**Install:**
+```bash
+npx giorris-claude-skills install codebase-index
+```
+
+**Use Cases:**
+- Indexing codebases for AI context
+- Mapping component relationships and dependencies
+- Documenting architecture automatically
+- Understanding unfamiliar projects quickly
+- Reducing token usage in AI conversations (30-60% with TOON format)
+- Generating up-to-date codebase documentation
+
+**Learn more:** [View Documentation](./skills/codebase-index/)
+
+---
+
 ### Spec Ideation Framework
 **Category:** Workflow
 **Version:** 1.0.0
