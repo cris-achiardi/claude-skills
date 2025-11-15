@@ -186,8 +186,8 @@ npx giorris-claude-skills install problem-mapping
 
 ## 🌐 Browse Online
 
-Visit **coming soon** to:
-- Browse skills with syntax-highlighted previews
+Visit **[giorris.dev/skills](https://www.giorris.dev/skills)** to:
+- Browse skills with code previews
 - View detailed documentation
 - See usage examples
 - Copy installation commands
@@ -241,8 +241,10 @@ Copyright © 2025 Cristian Morales
 ## 🔗 Links
 
 - **Website:** [giorris.dev](https://giorris.dev)
-- **Skills Catalog:** coming soon
+- **Skills Catalog:** [giorris.dev/skills](https://www.giorris.dev/skills)
 - **GitHub:** [@cris-achiardi](https://github.com/cris-achiardi)
+- **LinkedIn:** [Cristian Morales Achiardi](https://www.linkedin.com/in/cristian-morales-achiardi/)
+- **YouTube:** [@giongiorris](https://www.youtube.com/@giongiorris)
 
 ## 💬 Support
 
