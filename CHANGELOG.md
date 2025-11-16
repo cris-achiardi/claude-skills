@@ -5,6 +5,24 @@ All notable changes to the Giorris Claude Skills marketplace will be documented 
 The format is based on [Keep a Changelog](https://keepachangelog.com/en/1.0.0/),
 and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0.html).
 
+## [1.4.0] - 2025-11-16
+
+### Added
+- **New Skill: figma-variables-generator (v1.0.0)**
+  - Generate JSON files for creating Figma variable collections from text descriptions or design token data
+  - Support for 8 variable types: color, number, string, boolean, spacing, borderRadius, fontSize, fontWeight
+  - Multi-mode support (Light/Dark themes)
+  - Variable references/aliases using `{collection.path.variable}` syntax
+  - Code syntax generation for multiple platforms (WEB, iOS, ANDROID)
+  - Multiple naming conventions: camelCase, snake_case, kebab-case, PascalCase
+  - Automatic unit conversion (rem/em/pt to pixels)
+  - Hierarchical organization support
+  - Quick reference documentation included
+
+### Changed
+- Updated README.md with Figma Variables Generator documentation
+- Updated marketplace.json to include new skill
+
 ## [1.3.0] - 2025-11-14
 
 ### Added

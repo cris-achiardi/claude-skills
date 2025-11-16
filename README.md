@@ -8,9 +8,9 @@ Ready-to-use Claude skills for design workflows and spark creativity with AI.
 
 ## 📢 Latest Release
 
-**Version 1.3.0** - Skill versioning and updating capabilities
+**Version 1.4.0** - New Figma Variables Generator skill
 
-This release adds automatic skill version management through the npm installer. Skills can now be updated seamlessly.
+Added new skill for generating Figma variable collections from design tokens with support for multiple modes, code syntax, and variable references.
 
 **Updating Skills:**
 ```bash
@@ -118,6 +118,29 @@ npx giorris-claude-skills install codebase-index
 - Generating up-to-date codebase documentation
 
 **Learn more:** [View Documentation](./skills/codebase-index/)
+
+---
+
+### Figma Variables Generator
+**Category:** Design System
+**Version:** 1.0.0
+
+Generate JSON files for creating Figma variable collections from text descriptions or design token data. Converts design tokens (colors, spacing, typography, etc.) into Figma variables format with support for multiple modes (Light/Dark), code syntax definitions, variable references/aliases, and hierarchical organization.
+
+**Install:**
+```bash
+npx giorris-claude-skills install figma-variables-generator
+```
+
+**Use Cases:**
+- Creating Figma variable collections from design tokens
+- Converting existing design systems to Figma variables
+- Generating multi-mode color schemes (Light/Dark themes)
+- Setting up design token systems with proper references
+- Converting CSS/code tokens to Figma format
+- Automating design system setup in Figma
+
+**Learn more:** [View Documentation](./skills/figma-variables-generator/)
 
 ---
 
