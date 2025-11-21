@@ -1,5 +1,30 @@
 # Figma Variables Quick Reference
 
+## CRITICAL: Updating Existing Collections
+
+When adding to or updating an existing JSON file:
+1. **Read the existing file first** - Load current structure
+2. **Preserve exact naming** - Collection, category, subcategory, variable names must match EXACTLY
+3. **Figma's behavior**: Same name = updates, different name = creates new
+4. **Keep hierarchy** - Maintain the same nesting structure
+
+Example:
+- Existing: `{"Spacing": {"space": {"sm": 8}}}`
+- Adding: `{"Spacing": {"space": {"md": 16}}}` ✅ Correct
+- Wrong: `{"Spacing": {"spacing": {"md": 16}}}` ❌ Creates duplicate
+
+## CRITICAL: Only 4 Variable Types
+
+**Figma's variables API only supports 4 types:**
+- `color` - for colors
+- `number` - for spacing, radius, font sizes, weights, dimensions
+- `string` - for font families, text values
+- `boolean` - for true/false values
+
+**DO NOT use**: `spacing`, `borderRadius`, `fontSize`, `fontWeight` - these are INVALID and will cause import errors.
+
+**Use semantic naming instead**: `spacing.sm`, `fontSize.body`, `radius.lg` with type `number`.
+
 ## CRITICAL: Pixel Values Only
 
 Figma only accepts pixel values. Always convert relative units:
@@ -20,6 +45,8 @@ Figma only accepts pixel values. Always convert relative units:
 
 ## Variable Types Reference
 
+**Figma supports only 4 core variable types:**
+
 ### Color Variables
 ```json
 {
@@ -31,19 +58,35 @@ Figma only accepts pixel values. Always convert relative units:
 ```
 
 ### Number Variables
+Use for: spacing, border radius, font size, font weight, dimensions, etc.
+
 ```json
 {
-  "variableName": {
+  "spacing-sm": {
+    "$type": "number",
+    "$value": 8
+  },
+  "radius-md": {
+    "$type": "number",
+    "$value": 4
+  },
+  "fontSize-body": {
     "$type": "number",
     "$value": 16
+  },
+  "fontWeight-bold": {
+    "$type": "number",
+    "$value": 700
   }
 }
 ```
 
 ### String Variables
+Use for: font families, text content, identifiers, etc.
+
 ```json
 {
-  "variableName": {
+  "fontFamily-sans": {
     "$type": "string",
     "$value": "Inter"
   }
@@ -53,49 +96,9 @@ Figma only accepts pixel values. Always convert relative units:
 ### Boolean Variables
 ```json
 {
-  "variableName": {
+  "featureEnabled": {
     "$type": "boolean",
     "$value": true
-  }
-}
-```
-
-### Spacing Variables
-```json
-{
-  "variableName": {
-    "$type": "spacing",
-    "$value": 8
-  }
-}
-```
-
-### Border Radius Variables
-```json
-{
-  "variableName": {
-    "$type": "borderRadius",
-    "$value": 4
-  }
-}
-```
-
-### Font Size Variables
-```json
-{
-  "variableName": {
-    "$type": "fontSize",
-    "$value": 16
-  }
-}
-```
-
-### Font Weight Variables
-```json
-{
-  "variableName": {
-    "$type": "fontWeight",
-    "$value": 400
   }
 }
 ```
@@ -169,6 +172,32 @@ Reference other variables using the syntax: `{CollectionName.category.variableNa
   }
 }
 ```
+
+## JSON Formatting for Readability
+
+### Property Order
+1. `$type` - Type first
+2. `$value` - Value second
+3. `$description` - Description (if present)
+4. `$extensions` - Extensions last
+
+### Variable Ordering
+- **Size-based**: xs → sm → md → lg → xl
+- **Numeric**: 0 → 1 → 2 → 3 → 100 → 200...
+- **Semantic**: primary → secondary → tertiary
+- **State**: default → hover → active → pressed → disabled
+- **Alphabetical**: Use as fallback
+
+### Category Ordering
+1. Primitives/base values (gray, blue, red)
+2. Semantic/functional (text, background, border)
+3. Component-specific (button, card, modal)
+
+### Formatting
+- 2-space indentation
+- Each property on its own line
+- No trailing commas
+- Consistent spacing
 
 ## Naming Convention Examples
 

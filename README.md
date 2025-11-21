@@ -8,9 +8,13 @@ Ready-to-use Claude skills for design workflows and spark creativity with AI.
 
 ## 📢 Latest Release
 
-**Version 1.4.0** - New Figma Variables Generator skill
+**Version 1.5.0** - Major improvements to Figma Variables Generator
 
-Added new skill for generating Figma variable collections from design tokens with support for multiple modes, code syntax, and variable references.
+**figma-variables-generator updated to v1.1.0** with critical fixes and new features:
+- ✅ Fixed variable types to match Figma's actual API (only 4 types: color, number, string, boolean)
+- ✨ New: Update existing collections while preserving names and structure
+- ✨ New: Reformat messy plugin-generated JSON for better readability
+- 📚 Enhanced documentation with detailed examples and guidelines
 
 **Updating Skills:**
 ```bash
@@ -123,9 +127,15 @@ npx giorris-claude-skills install codebase-index
 
 ### Figma Variables Generator
 **Category:** Design System
-**Version:** 1.0.0
+**Version:** 1.1.0
 
-Generate JSON files for creating Figma variable collections from text descriptions or design token data. Converts design tokens (colors, spacing, typography, etc.) into Figma variables format with support for multiple modes (Light/Dark), code syntax definitions, variable references/aliases, and hierarchical organization.
+Generate JSON files for creating Figma variable collections from text descriptions or design token data. Converts design tokens (colors, spacing, typography, etc.) into Figma variables format with support for multiple modes (Light/Dark), code syntax definitions, variable references/aliases, and hierarchical organization. Now with update preservation and JSON reformatting capabilities.
+
+**✨ New in v1.1.0:**
+- Fixed variable types to match Figma's actual API (4 types only: color, number, string, boolean)
+- Update existing collections while preserving names and structure
+- Reformat messy plugin-generated JSON for better readability
+- Enhanced documentation with detailed examples
 
 **Install:**
 ```bash
@@ -135,6 +145,8 @@ npx giorris-claude-skills install figma-variables-generator
 **Use Cases:**
 - Creating Figma variable collections from design tokens
 - Converting existing design systems to Figma variables
+- Updating existing variable collections without creating duplicates
+- Reformatting messy plugin-generated JSON for readability
 - Generating multi-mode color schemes (Light/Dark themes)
 - Setting up design token systems with proper references
 - Converting CSS/code tokens to Figma format

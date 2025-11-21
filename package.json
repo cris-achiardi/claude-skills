@@ -1,6 +1,6 @@
 {
   "name": "giorris-claude-skills",
-  "version": "1.4.0",
+  "version": "1.5.0",
   "description": "CLI tool to install Claude Code skills from the Giorris marketplace",
   "type": "module",
   "main": "src/index.js",

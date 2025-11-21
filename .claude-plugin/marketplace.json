@@ -83,7 +83,7 @@
       "name": "figma-variables-generator",
       "source": "./skills/figma-variables-generator",
       "description": "Generate JSON files for creating Figma variable collections from text descriptions or design token data. Supports multiple modes, code syntax, variable references, and hierarchical organization.",
-      "version": "1.0.0",
+      "version": "1.1.0",
       "category": "design-system",
       "author": {
         "name": "Cristian Morales",

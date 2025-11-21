@@ -5,6 +5,36 @@ All notable changes to the Giorris Claude Skills marketplace will be documented 
 The format is based on [Keep a Changelog](https://keepachangelog.com/en/1.0.0/),
 and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0.html).
 
+## [1.5.0] - 2025-11-21
+
+### Changed
+
+#### figma-variables-generator (v1.0.0 → v1.1.0)
+- **BREAKING FIX**: Corrected variable types to match Figma's actual API (only 4 types supported)
+  - Removed invalid types: `spacing`, `borderRadius`, `fontSize`, `fontWeight`
+  - All numeric values now use `number` type with semantic naming
+  - Updated all examples to use correct types
+- **New Feature**: JSON update and preservation workflow
+  - Added Step 0: Check for existing JSON files before updates
+  - Automatic detection of update vs. new creation
+  - Preserves exact naming to prevent duplicate collections/categories
+  - Documents Figma's overwrite behavior (same name = updates, different name = creates new)
+- **New Feature**: JSON reformatting for readability
+  - Added Step 2.5: Format and Order for Readability guidelines
+  - Property ordering: `$type` → `$value` → `$description` → `$extensions`
+  - Variable ordering strategies: size-based, numeric, semantic, state-based
+  - Category ordering: primitives → semantic → components
+  - Example 6: Before/after reformatting of messy plugin-generated JSON
+- **Documentation**: Enhanced with critical warnings and best practices
+  - Added prominent warnings about using only 4 core types
+  - Added Example 5: Updating an existing collection
+  - Updated Important Notes with 9 key guidelines
+  - Enhanced quick-reference.md with formatting guidelines
+
+### Added
+- Updated CHANGELOG.md with detailed improvement notes
+- Updated README.md to reflect new capabilities
+
 ## [1.4.0] - 2025-11-16
 
 ### Added
