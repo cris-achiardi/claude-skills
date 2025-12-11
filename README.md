@@ -1,4 +1,4 @@
-# Claude Code Skills by Giorris
+# Claude Skills by Giorris
 
 [![npm version](https://img.shields.io/npm/v/giorris-claude-skills.svg?style=flat-square)](https://www.npmjs.com/package/giorris-claude-skills)
 [![npm downloads](https://img.shields.io/npm/dt/giorris-claude-skills.svg?style=flat-square)](https://www.npmjs.com/package/giorris-claude-skills)
