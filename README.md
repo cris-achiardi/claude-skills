@@ -8,13 +8,12 @@ Ready-to-use Claude skills for design workflows and spark creativity with AI.
 
 ## 📢 Latest Release
 
-**Version 1.5.0** - Major improvements to Figma Variables Generator
+**Version 1.6.0** - Codebase Index improvements for hybrid frameworks
 
-**figma-variables-generator updated to v1.1.0** with critical fixes and new features:
-- ✅ Fixed variable types to match Figma's actual API (only 4 types: color, number, string, boolean)
-- ✨ New: Update existing collections while preserving names and structure
-- ✨ New: Reformat messy plugin-generated JSON for better readability
-- 📚 Enhanced documentation with detailed examples and guidelines
+**codebase-index updated to v1.2.0** with React support and Windows compatibility:
+- ✨ New: React component support (.tsx, .jsx) for Astro projects
+- 🪟 Fixed: Windows compatibility - removed emoji output to prevent encoding errors
+- ✅ Fixed: Metadata count accuracy for hybrid Astro+React projects
 
 **Updating Skills:**
 ```bash
@@ -104,9 +103,9 @@ Strategic guide for consuming design system metadata to compose components intel
 
 ### Codebase Index
 **Category:** Development Tools
-**Version:** 1.1.0
+**Version:** 1.2.0
 
-Automatically generate relationship and dependency maps for any component-based codebase (React, Vue, Svelte, Astro, Next.js, Angular, Solid). Auto-detects framework and supports TOON format for 30-60% token savings. Creates comprehensive JSON/TOON files mapping component usage, imports, npm dependencies, utilities, CSS, and data queries.
+Automatically generate relationship and dependency maps for any component-based codebase (React, Vue, Svelte, Astro, Next.js, Angular, Solid). Auto-detects framework and supports TOON format for 30-60% token savings. Creates comprehensive JSON/TOON files mapping component usage, imports, npm dependencies, utilities, CSS, and data queries. Now with React component support for hybrid Astro projects and improved Windows compatibility.
 
 **Install:**
 ```bash
