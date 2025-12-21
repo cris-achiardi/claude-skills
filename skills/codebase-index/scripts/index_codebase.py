@@ -17,7 +17,7 @@ import argparse
 # Framework configurations
 FRAMEWORK_CONFIGS = {
     "astro": {
-        "extensions": [".astro"],
+        "extensions": [".astro", ".tsx", ".jsx"],
         "component_dirs": ["src/components", "src/layouts", "src/pages"],
         "data_patterns": [r'client\.fetch\([\'"]([^\'"]+)[\'"]'],
     },
@@ -341,7 +341,7 @@ class CodebaseIndexer:
     
     def scan(self):
         """Main scanning entry point"""
-        print(f"🔍 Scanning {self.framework} codebase...")
+        print(f"Scanning {self.framework} codebase...")
         
         # Scan components
         self._scan_components()
@@ -910,32 +910,32 @@ class CodebaseIndexer:
             "statistics": component_stats
         }
         
-        self._write_output(relationships_dir / f"component-usage.{self.output_format}", 
+        self._write_output(relationships_dir / f"component-usage.{self.output_format}",
                           component_usage)
-        print(f"✅ Generated component-usage.{self.output_format}")
-        
+        print(f"Generated component-usage.{self.output_format}")
+
         # Dependencies
         dependencies_output = {
             "generated": datetime.now(timezone.utc).isoformat(),
             **self.dependencies
         }
-        self._write_output(relationships_dir / f"dependencies.{self.output_format}", 
+        self._write_output(relationships_dir / f"dependencies.{self.output_format}",
                           dependencies_output)
-        print(f"✅ Generated dependencies.{self.output_format}")
-        
+        print(f"Generated dependencies.{self.output_format}")
+
         # Data flow
         data_flow_output = {
             "generated": datetime.now(timezone.utc).isoformat(),
             **self.data_queries
         }
-        self._write_output(relationships_dir / f"data-flow.{self.output_format}", 
+        self._write_output(relationships_dir / f"data-flow.{self.output_format}",
                           data_flow_output)
-        print(f"✅ Generated data-flow.{self.output_format}")
-        
+        print(f"Generated data-flow.{self.output_format}")
+
         # Index
         index_output = self._generate_index()
         self._write_output(self.output_dir / f"index.{self.output_format}", index_output)
-        print(f"✅ Generated index.{self.output_format}")
+        print(f"Generated index.{self.output_format}")
     
     def _calculate_component_stats(self) -> Dict:
         """Calculate component statistics"""
@@ -1010,22 +1010,22 @@ class CodebaseIndexer:
         print("\n" + "="*50)
         print("Summary:")
         print("="*50)
-        print(f"🎯 Framework: {self.framework}")
-        print(f"📝 Format: {self.output_format.upper()}")
-        print(f"✅ {self.stats['components_scanned']} components indexed")
-        print(f"✅ {self.stats['relationships_found']} relationships mapped")
-        print(f"✅ {self.stats['utilities_found']} utilities tracked")
-        print(f"✅ {self.stats['schemas_found']} schemas tracked")
-        print(f"✅ {self.stats['queries_found']} queries documented")
-        print(f"📁 Output: {self.output_dir}")
-        
+        print(f"Framework: {self.framework}")
+        print(f"Format: {self.output_format.upper()}")
+        print(f"{self.stats['components_scanned']} components indexed")
+        print(f"{self.stats['relationships_found']} relationships mapped")
+        print(f"{self.stats['utilities_found']} utilities tracked")
+        print(f"{self.stats['schemas_found']} schemas tracked")
+        print(f"{self.stats['queries_found']} queries documented")
+        print(f"Output: {self.output_dir}")
+
         if self.stats['errors']:
-            print(f"\n⚠️  {len(self.stats['errors'])} errors (showing first 3):")
+            print(f"\nWARNING: {len(self.stats['errors'])} errors (showing first 3):")
             for error in self.stats['errors'][:3]:
                 print(f"   - {error}")
-        
+
         if self.output_format == "toon":
-            print("\n💡 TOON format: 30-60% more token-efficient than JSON")
+            print("\nTOON format: 30-60% more token-efficient than JSON")
 
 
 def main():

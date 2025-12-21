@@ -1,6 +1,6 @@
 ---
 name: codebase-index
-version: 1.1.0
+version: 1.2.0
 description: Automatically generate relationship and dependency maps for any component-based codebase (React, Vue, Svelte, Astro, Next.js, Angular, Solid). Auto-detects framework. Supports TOON format for 30-60% token savings. Use when indexing codebases, mapping component relationships, documenting dependencies, or understanding unfamiliar projects. Generates JSON/TOON files mapping component usage, imports, npm dependencies, utilities, CSS, and data queries.
 ---
 
