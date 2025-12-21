@@ -5,6 +5,23 @@ All notable changes to the Giorris Claude Skills marketplace will be documented 
 The format is based on [Keep a Changelog](https://keepachangelog.com/en/1.0.0/),
 and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0.html).
 
+## [1.6.0] - 2025-12-21
+
+### Changed
+
+#### codebase-index (v1.1.0 → v1.2.0)
+- **New Feature**: React component support for Astro projects
+  - Added `.tsx` and `.jsx` extensions to Astro framework configuration
+  - Now correctly detects and indexes React components in hybrid Astro+React projects
+  - Impact: +10 components discovered in test project (47 → 57 components)
+- **Improved**: Windows compatibility
+  - Removed all emoji characters from console output
+  - Prevents UnicodeEncodeError on Windows systems with cp1252 encoding
+  - Cleaner, more professional terminal output across all platforms
+- **Fixed**: Metadata count accuracy
+  - React component metadata files (.metadata.tsx) now correctly detected
+  - Metadata coverage tracking now 100% accurate for hybrid projects
+
 ## [1.5.0] - 2025-11-21
 
 ### Changed
