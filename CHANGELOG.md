@@ -5,6 +5,21 @@ All notable changes to the Giorris Claude Skills marketplace will be documented 
 The format is based on [Keep a Changelog](https://keepachangelog.com/en/1.0.0/),
 and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0.html).
 
+## [1.7.0] - 2026-04-08
+
+### Added
+
+#### figma-component-generator (v1.0.0)
+- **New Skill**: Generate Figma component sets from source code using the figma-cli tool
+  - Reads React/CSS/metadata source files and produces Figma components with variants and variable bindings
+  - Automatic Figma variable mapping from CSS custom properties
+  - Lucide icon library integration with per-variant recoloring
+  - Text style application via Figma's local text styles
+  - Modular rules system for sizing modes, nested components, slots, and icon recoloring
+  - Project-specific configuration via template reference files (typography, icon library)
+  - Cross-platform support (macOS and Windows)
+  - Comprehensive README with setup guide for new projects
+
 ## [1.6.0] - 2025-12-21
 
 ### Changed

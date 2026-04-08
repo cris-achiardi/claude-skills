@@ -8,12 +8,15 @@ Ready-to-use Claude skills for design workflows and spark creativity with AI.
 
 ## 📢 Latest Release
 
-**Version 1.6.0** - Codebase Index improvements for hybrid frameworks
+**Version 1.7.0** - Figma Component Generator
 
-**codebase-index updated to v1.2.0** with React support and Windows compatibility:
-- ✨ New: React component support (.tsx, .jsx) for Astro projects
-- 🪟 Fixed: Windows compatibility - removed emoji output to prevent encoding errors
-- ✅ Fixed: Metadata count accuracy for hybrid Astro+React projects
+**New skill: figma-component-generator v1.0.0** - Generate Figma component sets from source code:
+- Reads React/CSS/metadata source files and produces Figma components with variants and variable bindings
+- Automatic CSS token to Figma variable mapping
+- Lucide icon library integration with per-variant recoloring
+- Modular rules system (sizing, nested components, slots, icon recoloring)
+- Project-specific configuration via template reference files
+- Requires [figma-cli](https://github.com/silships/figma-cli)
 
 **Updating Skills:**
 ```bash
@@ -152,6 +155,36 @@ npx giorris-claude-skills install figma-variables-generator
 - Automating design system setup in Figma
 
 **Learn more:** [View Documentation](./skills/figma-variables-generator/)
+
+---
+
+### Figma Component Generator
+**Category:** Design System
+**Version:** 1.0.0
+
+Generate Figma component sets from source code using the figma-cli tool. Reads React/CSS/metadata source files and produces properly structured Figma components with variants, variable bindings, icon instances, and text styles.
+
+**Key Features:**
+- Automatic CSS token to Figma variable mapping
+- Lucide icon library integration with per-variant recoloring
+- Figma text style application (not hardcoded fonts)
+- Modular rules for nested components, slots, sizing modes
+- Project-specific configuration via template reference files
+
+**Install:**
+```bash
+npx giorris-claude-skills install figma-component-generator
+```
+
+**Use Cases:**
+- Generating Figma components from React/CSS source code
+- Keeping Figma libraries in sync with code-based design systems
+- Batch-creating component variants with proper variable bindings
+- Building nested component architectures (sub-components + slots)
+
+**Requires:** [figma-cli](https://github.com/silships/figma-cli) installed locally
+
+**Learn more:** [View Documentation](./skills/figma-component-generator/)
 
 ---
 

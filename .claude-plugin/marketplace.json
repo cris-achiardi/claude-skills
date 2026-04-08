@@ -90,6 +90,18 @@
         "email": "crmorales.achiardi@gmail.com"
       },
       "license": "MIT"
+    },
+    {
+      "name": "figma-component-generator",
+      "source": "./skills/figma-component-generator",
+      "description": "Generate Figma component sets from source code using the figma-cli tool. Reads React/CSS source files and produces Figma components with variants, variable bindings, icon instances, and proper text styles.",
+      "version": "1.0.0",
+      "category": "design-system",
+      "author": {
+        "name": "Cristian Morales",
+        "email": "crmorales.achiardi@gmail.com"
+      },
+      "license": "MIT"
     }
   ]
 }
