@@ -65,3 +65,7 @@ parent.appendChild(tab1);
 parent.appendChild(tab2);
 parent.appendChild(tab3);
 ```
+
+## Relationship to atomic dependencies
+
+This rule covers creating **new** sub-component sets that live alongside the parent (e.g., Tab Item created together with Tabs). For reusing **existing** component sets that were generated separately (e.g., using a Button component set that already exists in the file), see `rules/atomic-dependencies.md`.

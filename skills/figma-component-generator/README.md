@@ -80,10 +80,13 @@ These contain Figma Plugin API patterns and rules that apply to any project:
 | File | Purpose |
 |---|---|
 | `references/figma-plugin-api-patterns.md` | Core API: creating components, binding variables, positioning |
+| `references/figma-map-lookup.md` | Optional JSON map for fast dependency resolution by ID |
 | `references/rules/sizing-modes.md` | `resize()` ordering, axis direction table |
 | `references/rules/icon-recoloring.md` | Recolor pattern for icons inside colored variants |
 | `references/rules/nested-components.md` | Sub-component architecture for repeated stateful elements |
-| `references/rules/slots.md` | Figma slots for dynamic item count |
+| `references/rules/slots.md` | Figma slots for dynamic item count (Pattern A vs B) |
+| `references/rules/atomic-dependencies.md` | Classify Visual / Layout / Compositional and reuse existing component sets as instances |
+| `references/rules/floating-overlays.md` | Recognize popovers, dropdowns, tooltips and split into trigger + floating component sets when needed |
 
 ## Source Code Conventions
 
@@ -108,7 +111,7 @@ Figma: background/interactive/primary
 
 Rule: Strip `var(--` and `)`, replace `-` with `/` for path segments.
 
-If your Figma variables use a different naming convention, update the mapping logic in `SKILL.md` Step 3.
+If your Figma variables use a different naming convention, update the mapping logic in `SKILL.md` Step 4.
 
 ## Adding New Rules
 
@@ -128,11 +131,20 @@ figma-component-generator/
   README.md                             <- This file
   references/
     figma-plugin-api-patterns.md        <- Core Figma API patterns (universal)
+    figma-map-lookup.md                 <- Optional figma-map.json schema and bootstrap (universal)
     figma-icon-library.md               <- Icon component set config (project-specific)
     figma-typography.md                 <- Font + text style config (project-specific)
     rules/
       sizing-modes.md                   <- resize() ordering, axis directions (universal)
       icon-recoloring.md                <- Recolor icons per variant (universal)
       nested-components.md              <- Sub-components for stateful elements (universal)
-      slots.md                          <- Dynamic item count with slots (universal)
+      slots.md                          <- Dynamic item count with slots, Pattern A/B (universal)
+      atomic-dependencies.md            <- Classify component + reuse existing atoms as instances (universal)
+      floating-overlays.md              <- Trigger + overlay split for popovers/dropdowns/tooltips (universal)
 ```
+
+## Optional: figma-map.json lookup table
+
+For faster, more reliable dependency resolution in compositional components, you can provide an external JSON file that maps component names to their Figma node IDs. The file is read from `~/.claude/data/figma-map.json` (the path is configurable, and the skill works without it).
+
+When present, the skill uses `figma.getNodeByIdAsync(id)` for direct lookups instead of traversing every page with `figma.root.findAll`. See `references/figma-map-lookup.md` for the schema and the bootstrap script that scans your Figma file and builds the map.

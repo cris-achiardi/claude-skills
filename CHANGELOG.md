@@ -5,6 +5,38 @@ All notable changes to the Giorris Claude Skills marketplace will be documented 
 The format is based on [Keep a Changelog](https://keepachangelog.com/en/1.0.0/),
 and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0.html).
 
+## [1.8.0] - 2026-04-26
+
+### Changed
+
+#### figma-component-generator (v1.0.0 → v1.1.0)
+- **New Step**: Component classification and dependency resolution (Step 3)
+  - Classifies components as Visual, Layout Wrapper, or Compositional based on CSS and metadata signals
+  - Layout wrappers trigger a clarity checkpoint (docs-only / wrapper-with-slot / skip) before any generation
+  - Compositional components extract dependencies from metadata `nestedComponents`/`commonPartners` and source imports, then reuse existing component sets via `createInstance()` instead of redrawing them as raw frames
+- **New Reference**: `references/figma-map-lookup.md`
+  - Optional `figma-map.json` schema for direct ID lookups
+  - Bootstrap script that scans every page and emits component-set IDs
+  - Resolution order: lookup table → fallback to `figma.root.findAll`
+- **New Rule**: `references/rules/atomic-dependencies.md`
+  - Visual/Layout/Compositional classification with explicit code signals
+  - Dependency extraction, Figma traversal, and missing-dependency placeholder behavior
+  - Variant selection heuristics (mapping React props like `role`, `color`, `size` to Figma variants) and instance text overrides
+- **New Rule**: `references/rules/floating-overlays.md`
+  - Detection signals for popovers, dropdowns, tooltips (Floating UI, Radix, Headless UI, cmdk, portals, absolute/fixed positioning)
+  - Shape A (split into trigger + floating component sets) vs. Shape B (single component with `State=open`) decision guide
+  - Common-component recommendations table (Select, DatePicker, Tooltip, Modal, Toast, etc.)
+- **Updated Pattern Detection Table**:
+  - Sharper Dynamic-item-count signals (positive vs. negative; OTP, rating, single-child wrappers, render-props excluded)
+  - New rows for Floating overlays and Atomic dependencies
+  - Cross-dependency note for components that fire both Nested-components and Dynamic-item-count rules
+- **Updated `slots.md`**:
+  - Pattern A (instance-filled, homogeneous items) vs. Pattern B (frame-filled, heterogeneous items)
+  - Selection-persistence pitfall for `slot convert` (must chain in one bash call)
+  - `--name` flag may be ignored; new slot ID is printed by the CLI and replaces the original frame ID
+- **Updated `nested-components.md`**: Added cross-reference to `atomic-dependencies.md` to disambiguate "create new sub-component set" from "reuse existing component set as instance"
+- **Updated Generation Report**: Now includes a Dependencies-resolved line so users see which atoms were wired vs. placeholdered
+
 ## [1.7.0] - 2026-04-08
 
 ### Added

@@ -8,14 +8,16 @@ Ready-to-use Claude skills for design workflows and spark creativity with AI.
 
 ## 📢 Latest Release
 
-**Version 1.7.0** - Figma Component Generator
+**Version 1.8.0** - Figma Component Generator improvements
 
-**New skill: figma-component-generator v1.0.0** - Generate Figma component sets from source code:
-- Reads React/CSS/metadata source files and produces Figma components with variants and variable bindings
-- Automatic CSS token to Figma variable mapping
-- Lucide icon library integration with per-variant recoloring
-- Modular rules system (sizing, nested components, slots, icon recoloring)
-- Project-specific configuration via template reference files
+**Updated skill: figma-component-generator v1.0.0 → v1.1.0** - Smarter classification, dependency resolution, and overlay handling:
+- New component classification step (Visual / Layout wrapper / Compositional) with a clarity checkpoint for layout wrappers
+- Compositional components now reuse existing component sets via `createInstance()` instead of redrawing them as raw frames
+- Optional `figma-map.json` lookup table for fast direct-ID dependency resolution (with `findAll` fallback)
+- New rule: `floating-overlays.md` — detect popovers/dropdowns/tooltips and split into trigger + floating component sets
+- New rule: `atomic-dependencies.md` — classification + variant-selection heuristics for composed components
+- Slots split into Pattern A (instance-filled) vs. Pattern B (frame-filled), plus updated `slot convert` caveats
+- Sharper pattern detection table and a new Dependencies-resolved line in the generation report
 - Requires [figma-cli](https://github.com/silships/figma-cli)
 
 **Updating Skills:**
@@ -160,15 +162,20 @@ npx giorris-claude-skills install figma-variables-generator
 
 ### Figma Component Generator
 **Category:** Design System
-**Version:** 1.0.0
+**Version:** 1.1.0
 
 Generate Figma component sets from source code using the figma-cli tool. Reads React/CSS/metadata source files and produces properly structured Figma components with variants, variable bindings, icon instances, and text styles.
 
 **Key Features:**
 - Automatic CSS token to Figma variable mapping
+- Component classification (Visual / Layout wrapper / Compositional) with a clarity checkpoint for layout wrappers
+- Atomic dependency resolution: reuse existing component sets via `createInstance()` instead of redrawing as raw frames
+- Optional `figma-map.json` lookup table for fast direct-ID dependency resolution
+- Floating overlay handling for popovers, dropdowns, tooltips (trigger + overlay split)
+- Slots split into Pattern A (instance-filled) and Pattern B (frame-filled)
 - Lucide icon library integration with per-variant recoloring
 - Figma text style application (not hardcoded fonts)
-- Modular rules for nested components, slots, sizing modes
+- Modular rules for nested components, slots, sizing modes, atomic dependencies, floating overlays
 - Project-specific configuration via template reference files
 
 **Install:**

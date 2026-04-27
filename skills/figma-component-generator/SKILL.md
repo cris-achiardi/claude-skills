@@ -1,6 +1,6 @@
 ---
 name: figma-component-generator
-version: 1.0.0
+version: 1.1.0
 description: "Generate Figma component sets from source code using the figma-cli tool. This skill should be used when the user wants to create or update Figma components by reading React/CSS source files and generating matching component sets with variants, properties, and variable bindings. Invoked as a slash command with a Figma page URL or component name."
 ---
 
@@ -61,7 +61,32 @@ From these files, build a **component spec**:
 - **Boolean features**: Identify optional visual elements (dots, icons, close buttons) that should become boolean component properties
 - **Shape properties**: Border radius, stroke width, stroke alignment
 
-### Step 3: Query Figma variables
+### Step 3: Classify component and resolve dependencies
+
+Before querying variables or generating, determine whether this component should be generated as a component set, and if so, resolve its atom dependencies.
+
+**Read `references/rules/atomic-dependencies.md`** and follow the classification and resolution workflow:
+
+1. **Classify** the component as Visual, Layout Wrapper, or Compositional using the CSS and metadata signals described in the rule
+2. **If Layout Wrapper**: present the clarity checkpoint to the user and wait for their choice before proceeding. Do NOT generate a component set unless the user explicitly requests it.
+3. **If Visual or Compositional**: extract dependency names from metadata (`composition.nestedComponents`, `composition.commonPartners`) and source imports
+4. **Resolve dependencies** using the lookup table or Figma traversal (see below)
+5. **Build a dependency map**: for each found dependency, record the component set ID and available variants. For missing dependencies, warn the user.
+6. **Pass the dependency map** to Step 6 (generation) so the eval script uses `createInstance()` instead of raw frames for found dependencies.
+
+#### Dependency resolution with optional lookup table
+
+An external JSON lookup table may exist that maps component names to Figma node IDs. Read `references/figma-map-lookup.md` for the full schema and generation instructions.
+
+**Resolution order:**
+
+1. **Check for lookup table**: Look for a `figma-map.json` file provided by the user (typically in `~/.claude/data/`). If found, extract the `figmaFileKey` and compare it to the file key parsed from the Figma URL. If they match, use the map.
+2. **Direct ID lookup (fast path)**: For each dependency name, check `components.<name>.componentSetId` in the map. If non-null, use `figma.getNodeByIdAsync(id)` to fetch the node directly. This avoids cross-page traversal entirely.
+3. **Fallback to findAll (slow path)**: If the map doesn't exist, the file keys don't match, or a dependency isn't in the map, fall back to `figma.root.findAll(n => n.type === 'COMPONENT_SET' && n.name === name)`.
+
+The lookup table is **optional** — the skill must work without it. Never hardcode a specific file path; treat it as an external data source that may or may not be present.
+
+### Step 4: Query Figma variables
 
 Before generating, fetch all available Figma variables to build a mapping:
 
@@ -81,7 +106,7 @@ For each token used by the component, check if a matching Figma variable exists.
 
 For detailed mapping rules and patterns, read `references/figma-plugin-api-patterns.md`.
 
-### Step 4: Navigate to the target page
+### Step 5: Navigate to the target page
 
 Parse the `node-id` from the Figma URL (URL-encoded, e.g., `2001-2` means `2001:2`).
 
@@ -101,11 +126,11 @@ cd $CLI_PATH && node src/index.js eval "
 })()"
 ```
 
-### Step 5: Generate the component set
+### Step 6: Generate the component set
 
 Build a single eval script that creates all variant combinations. The script must:
 
-1. **Load fonts** (always load Outfit Regular/Medium/SemiBold as needed -- see `references/figma-typography.md`)
+1. **Load fonts** (load the weights your design system requires -- see `references/figma-typography.md`)
 2. **Fetch variables** and create a lookup helper
 3. **Create component variants** by iterating over all dimension combinations:
    - For each combination of variant properties (e.g., `solid + primary + md`), create a `figma.createComponent()`
@@ -113,6 +138,7 @@ Build a single eval script that creates all variant combinations. The script mus
    - Set auto-layout, sizing, padding, gap, corner radius
    - Set fills/strokes with placeholder colors, then bind to Figma variables
    - Create child elements (text labels, dots, icons) with proper variable bindings
+   - For children that map to resolved dependencies (from Step 3), use `componentNode.createInstance()` instead of creating raw frames. See `references/rules/atomic-dependencies.md` for instance creation and variant selection patterns.
    - Add boolean component properties for optional elements
 4. **Combine all variants** using `figma.combineAsVariants(components, figma.currentPage)`
 5. **Arrange in a grid** for readability (remove auto-layout from set, position manually)
@@ -130,7 +156,11 @@ Before generating, scan the component source for these patterns and load the rel
 | **Icons** | lucide-react imports, icon props, SVG elements, spinners | `references/figma-icon-library.md` + `references/rules/icon-recoloring.md` |
 | **Typography** | Text nodes, font tokens, text-style CSS properties | `references/figma-typography.md` |
 | **Nested components** | `.map()` loops, repeated elements with per-item state (isActive, isSelected) | `references/rules/nested-components.md` |
-| **Dynamic item count** | Lists, tabs, menus where N items varies | `references/rules/slots.md` |
+| **Dynamic item count** | Positive: prop is an array mapped with `.map()`; runtime-determined count; no fixed upper bound. Negative: named structural children (header/footer); fixed count (OTP=6, rating=5); single-child wrapper (Tooltip trigger); render-props | `references/rules/slots.md` |
+| **Floating overlays** | Imports from `@floating-ui/*`, `@radix-ui/react-popover`, `@radix-ui/react-dropdown-menu`, `@radix-ui/react-tooltip`, `cmdk`, `@headlessui/react`; uses `createPortal`; `position: absolute\|fixed` with high z-index on the expanded part; conditional render of menu/dropdown/popover content | `references/rules/floating-overlays.md` |
+| **Atomic dependencies** | Molecule/organism; metadata `nestedComponents` non-empty; imports design-system components | `references/rules/atomic-dependencies.md` |
+
+**Cross-dependency**: `Nested components` and `Dynamic item count` often fire together. When a parent maps over items AND each item has per-item state (isActive, isSelected), you need BOTH: create a sub-component set per `nested-components.md`, then use slot Pattern A (instance-filled) in the parent per `slots.md`. If items are heterogeneous or have no per-item state, only slots.md applies (Pattern B, frame-filled).
 
 #### Key rules for the eval script:
 
@@ -141,8 +171,8 @@ Before generating, scan the component source for these patterns and load the rel
 - Return `JSON.stringify()` for structured results
 - Use `figma.variables.setBoundVariableForPaint()` for variable binding
 - For complex scripts, write to a temp `.js` file and use `eval --file <path>`, then clean up after
-- All icons must be Lucide instances (including spinners as `loader-2`) -- read `references/figma-icon-library.md`
-- All text must use Outfit font via Figma text styles -- read `references/figma-typography.md`
+- Icons should use your project's icon component set when available -- read `references/figma-icon-library.md`
+- All text must use the project's font family via Figma text styles -- read `references/figma-typography.md`
 
 #### Grid layout strategy:
 
@@ -151,7 +181,7 @@ Arrange variants in a grid where:
 - **Rows** = colors (neutral, primary, ...)
 - **Sections** (separated by gap) = visual variants (solid, soft, outline)
 
-### Step 6: Report results
+### Step 7: Report results
 
 After generation, present a summary:
 
@@ -166,6 +196,9 @@ After generation, present a summary:
 - **Unmapped tokens**:
   - `var(--background-utility-coral)` -- no matching Figma variable found
   - `var(--foreground-utility-coral)` -- no matching Figma variable found
+- **Dependencies resolved**: 3/5 (Button, SearchInput, Select found; Input, Checkbox not in file)
+  OR
+- **Dependencies**: none (atom component)
 ```
 
 If there are unmapped tokens, suggest the user create the missing variables in Figma or check for naming mismatches.
